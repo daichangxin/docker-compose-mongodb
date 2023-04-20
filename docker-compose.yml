@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mongodb-primary:
+    build:
+      dockerfile: mongo.dockerfile
+      context: .docker/mongo/
+    ports:
+      - 27027:27027
+    restart: always
+    command: --keyFile /data/keyfile.pem --replSet rs0 --port 27027
+    environment:
+      - MONGO_PORT=27027
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+    volumes:
+      - ./data/db:/data/db
